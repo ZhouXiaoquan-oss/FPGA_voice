@@ -3,3 +3,11 @@
 
 # 二进制
 *.fs binary
+
+# 让 GitHub 语言统计识别为 Verilog，而不是把 .fs 位流当成 F#
+*.fs linguist-detectable=false
+*.fs linguist-vendored
+*.cst linguist-detectable=false
+*.sdc linguist-detectable=false
+*.tcl linguist-detectable=false
+*.mem linguist-detectable=false
