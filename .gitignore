@@ -1,0 +1,29 @@
+# Gowin 构建产物
+impl/
+*.bin
+*.binx
+*.vg
+*.qdb
+*.db
+*.p
+*.cfg
+*.prj
+*.html
+*.pcf
+
+# 本仓库内保留的证据文件
+!docs/evidence/*
+
+# 临时/波形/备份
+*.vcd
+*.wdb
+*.bak
+*.bak_*
+transcript
+__pycache__/
+Thumbs.db
+.DS_Store
+
+# 编辑器
+.vscode/
+.idea/

@@ -1,0 +1,12 @@
+# v10 交付位流身份（2026-11-01 12:30 op69 烧入外部 Flash）
+file      : d2_screen_pnr.fs
+bytes     : 14104161
+sha256    : 2E2978AE25CD2975F5EFECCAB73A461627EB3633A8045EBB52310CDB12D72962
+usercode  : 0x0000B149
+checksum  : 0xB149
+device    : GW5AT-LV60PG484AC1/I0
+tool      : Gowin V1.9.11.03 Education (81398)
+pnr gates : 9/9 PASS  (clk Fmax 50.029 MHz, setup viol 0, hold viol 0, recovery min +0.137 ns, removal min +0.357 ns, unrouted 0)
+resources : LUT 30867 / ALU 15986 / FF 14247 / BSRAM 89-118 / DSP 61-118 / I/O 65-297
+verify    : op73 readback == 0x0000B149 (SRAM 12:23:59), op69 exFlash OK 380.88 s
+evidence  : ../docs/evidence/gates_summary.json, V10_BURN_RESULT.txt

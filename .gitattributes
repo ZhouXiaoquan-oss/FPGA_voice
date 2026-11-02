@@ -1,0 +1,5 @@
+# 关闭 Git 的行尾转换，保证源码字节与 RTL_FROZEN.txt 里的 SHA256 一致
+* -text
+
+# 二进制
+*.fs binary

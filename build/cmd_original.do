@@ -1,0 +1,18 @@
+-d F:\fiehuo\ddr_audio_v1_20261030\work\d2_screen_pnr\impl\gwsynthesis\d2_screen_pnr.vg
+-p GW5AT-60B-PBGA484A-1
+-pn GW5AT-LV60PG484AC1/I0
+-cst F:\fiehuo\ddr_audio_v1_20261030\work\d2_screen_pnr\src\d2.cst
+-cfg F:\fiehuo\ddr_audio_v1_20261030\work\d2_screen_pnr\impl\pnr\device.cfg
+-sdc F:\fiehuo\ddr_audio_v1_20261030\work\d2_screen_pnr\src\d2.sdc
+-bit
+-tr
+-ph
+-timing
+-cst_error
+-convert_sdp32_36_to_sdp16_18
+-place_option 1
+-route_option 2
+-clock_route_order 1
+-correct_hold 1
+-route_maxfan 100
+-global_freq 100.000

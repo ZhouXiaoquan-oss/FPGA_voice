@@ -1,0 +1,485 @@
+{
+ "rpt_present": true,
+ "tool_version": "V1.9.11.03 Education",
+ "part_number": "GW5AT-LV60PG484AC1/I0",
+ "created_time": "Sun Nov  1 12:14:57 2026",
+ "resources": {
+  "Logic": {
+   "used": 46883,
+   "total": 59904,
+   "util": "79%"
+  },
+  "--LUT,ALU,ROM16": {
+   "used": 46853,
+   "total": null,
+   "util": "-",
+   "detail": "30867 LUT, 15986 ALU, 0 ROM16"
+  },
+  "--SSRAM(RAM16)": {
+   "used": 5,
+   "total": null,
+   "util": "-"
+  },
+  "Register": {
+   "used": 14258,
+   "total": 60780,
+   "util": "24%"
+  },
+  "--Logic Register as Latch": {
+   "used": 0,
+   "total": 59904,
+   "util": "0%"
+  },
+  "--Logic Register as FF": {
+   "used": 14247,
+   "total": 59904,
+   "util": "24%"
+  },
+  "--I/O Register as Latch": {
+   "used": 0,
+   "total": 876,
+   "util": "0%"
+  },
+  "--I/O Register as FF": {
+   "used": 11,
+   "total": 876,
+   "util": "2%"
+  },
+  "CLS": {
+   "used": 25553,
+   "total": 29952,
+   "util": "86%"
+  },
+  "I/O Port": {
+   "used": 65,
+   "total": 297,
+   "util": "22%"
+  },
+  "I/O Buf": {
+   "used": 62,
+   "total": null,
+   "util": "-"
+  },
+  "--Input Buf": {
+   "used": 6,
+   "total": null,
+   "util": "-"
+  },
+  "--Output Buf": {
+   "used": 37,
+   "total": null,
+   "util": "-"
+  },
+  "--Inout Buf": {
+   "used": 19,
+   "total": null,
+   "util": "-"
+  },
+  "IOLOGIC": {
+   "used": 61,
+   "total": 293,
+   "util": "21%"
+  },
+  "BSRAM": {
+   "used": 89,
+   "total": 118,
+   "util": "76%"
+  },
+  "DSP": {
+   "used": 61,
+   "total": 118,
+   "util": "52%"
+  }
+ },
+ "resources_flat": {
+  "logic": {
+   "used": 46883,
+   "total": 59904
+  },
+  "register": {
+   "used": 14258,
+   "total": 60780
+  },
+  "cls": {
+   "used": 25553,
+   "total": 29952
+  },
+  "bsram": {
+   "used": 89,
+   "total": 118
+  },
+  "dsp": {
+   "used": 61,
+   "total": 118
+  },
+  "io_port": {
+   "used": 65,
+   "total": 297
+  },
+  "iologic": {
+   "used": 61,
+   "total": 293
+  },
+  "ssram": {
+   "used": 5,
+   "total": null
+  },
+  "lut": {
+   "used": 30867
+  },
+  "alu": {
+   "used": 15986
+  },
+  "rom16": {
+   "used": 0
+  },
+  "ff": {
+   "used": 14247,
+   "total": 59904
+  }
+ },
+ "tr_content_present": true,
+ "fmax_table": [
+  {
+   "clock": "clk",
+   "constraint_mhz": 50.0,
+   "fmax_mhz": 50.029,
+   "logic_level": "16"
+  },
+  {
+   "clock": "mem_clk",
+   "constraint_mhz": 400.0,
+   "fmax_mhz": 2016.128,
+   "logic_level": "1"
+  },
+  {
+   "clock": "clk_x1",
+   "constraint_mhz": 100.0,
+   "fmax_mhz": 100.565,
+   "logic_level": "4"
+  }
+ ],
+ "tns_table": [
+  {
+   "clock": "clk",
+   "type": "Setup",
+   "tns_ns": 0.0,
+   "endpoints": 0
+  },
+  {
+   "clock": "clk",
+   "type": "Hold",
+   "tns_ns": 0.0,
+   "endpoints": 0
+  },
+  {
+   "clock": "mem_clk",
+   "type": "Setup",
+   "tns_ns": 0.0,
+   "endpoints": 0
+  },
+  {
+   "clock": "mem_clk",
+   "type": "Hold",
+   "tns_ns": 0.0,
+   "endpoints": 0
+  },
+  {
+   "clock": "clk_x1",
+   "type": "Setup",
+   "tns_ns": 0.0,
+   "endpoints": 0
+  },
+  {
+   "clock": "clk_x1",
+   "type": "Hold",
+   "tns_ns": 0.0,
+   "endpoints": 0
+  }
+ ],
+ "path_tables": {
+  "Setup": {
+   "count": 2000,
+   "min_slack_ns": 0.012,
+   "violated_paths": 0,
+   "worst_path": {
+    "n": 1,
+    "slack": 0.012,
+    "from_node": "u_keys/g_deb[9].st_s1/Q",
+    "to_node": "u_alloc/v_off_8_s0/D",
+    "from_clock": "clk:[R]",
+    "to_clock": "clk:[R]",
+    "relation": "20.000",
+    "clock_skew": 0.486,
+    "data_delay": 19.439
+   }
+  },
+  "Hold": {
+   "count": 2000,
+   "min_slack_ns": 0.003,
+   "violated_paths": 0,
+   "worst_path": {
+    "n": 1,
+    "slack": 0.003,
+    "from_node": "u_ddr3/gw3_top/u_gwmc_top/gw_wr_data0/wr_buf_din_83_s0/Q",
+    "to_node": "u_ddr3/gw3_top/u_gwmc_top/gw_wr_data0/wr_fifo/mem_mem_0_2_s/DI[11]",
+    "from_clock": "clk_x1:[R]",
+    "to_clock": "clk_x1:[R]",
+    "relation": "0.500",
+    "clock_skew": 0.004,
+    "data_delay": 0.536
+   }
+  },
+  "Recovery": {
+   "count": 2000,
+   "min_slack_ns": 0.137,
+   "violated_paths": 0,
+   "worst_path": {
+    "n": 1,
+    "slack": 0.137,
+    "from_node": "u_ddr3/gw3_top/u_ddr_phy_top/ddr_rsti_reg_2_s0/Q",
+    "to_node": "u_ddr3/gw3_top/u_ddr_phy_top/u_ddr_init/read_calibration_logic_gen[0].rburst_neg_r_s0/CLEAR",
+    "from_clock": "clk:[R]",
+    "to_clock": "clk_x1:[F]",
+    "relation": "5.000",
+    "clock_skew": 1.758,
+    "data_delay": 2.778
+   }
+  },
+  "Removal": {
+   "count": 2000,
+   "min_slack_ns": 0.357,
+   "violated_paths": 0,
+   "worst_path": {
+    "n": 1,
+    "slack": 0.357,
+    "from_node": "ddr_reset_sync_1_s0/Q",
+    "to_node": "u_ddr3_pll_ctrl/u_mdrp/mdrp_wdata_7_s1/CLEAR",
+    "from_clock": "clk:[R]",
+    "to_clock": "clk:[R]",
+    "relation": "0.000",
+    "clock_skew": 0.004,
+    "data_delay": 0.3
+   }
+  }
+ },
+ "timing_paths_file": {
+  "SETUP": {
+   "count": 2000,
+   "min_slack_ns": 0.012,
+   "violated": 0
+  },
+  "HOLD": {
+   "count": 2000,
+   "min_slack_ns": 0.003,
+   "violated": 0
+  }
+ },
+ "build_log": {
+  "path": "F:\\fiehuo\\ddr_audio_v1_20261030\\work\\d2_screen_pnr\\build_screen_pnr_v10_full_20261101_114824.log",
+  "bytes": 11399,
+  "exit_code": 0,
+  "start": "2026-11-01 11:48:25",
+  "end": null,
+  "elapsed_s": 1604.1,
+  "pr0004_unrouted_marks": 0,
+  "unrouted_nets_reported": 0,
+  "pr0004_present": false,
+  "warn_count": 6,
+  "error_count": 0,
+  "pr1014_generic_clock": true,
+  "routing_phases": [
+   "60%",
+   "70%",
+   "80%",
+   "90%"
+  ],
+  "pnr_completed": true,
+  "timing_analysis_completed": true,
+  "bitstream_completed": true,
+  "unrouted_word": 0
+ },
+ "bitstream": {
+  "path": "F:\\fiehuo\\ddr_audio_v1_20261030\\work\\d2_screen_pnr\\impl\\pnr\\d2_screen_pnr.fs",
+  "bytes": 14104161,
+  "sha256": "2e2978ae25cd2975f5efeccab73a461627eb3633a8045ebb52310cdb12d72962",
+  "checksum": "0xB149",
+  "usercode": "0x0000B149",
+  "tool_version": "V1.9.11.03 Education (81398)",
+  "device": "GW5AT-60",
+  "part_number": "GW5AT-LV60PG484AC1/I0",
+  "compress": "ON"
+ },
+ "device_cfg": {
+  "path": "F:\\fiehuo\\ddr_audio_v1_20261030\\work\\d2_screen_pnr\\impl\\pnr\\device.cfg",
+  "vccx": "1.8",
+  "vcc": "0.9"
+ },
+ "cmd_do_present": true,
+ "constraints": {
+  "cst_insloc_ddr_rsti_reg_2_s0_R53C57": true,
+  "sdc_s1_false_path_ddrst_s_0_s0_D": true,
+  "sdc_hold_only_ev_toerr": true,
+  "sdc_hold_only_dll_step_base": true,
+  "sdc_hold_only_req_star": true,
+  "sdc_hold_only_tap_pw_data": true,
+  "sdc_set_min_delay_0p5": true,
+  "sdc_report_timing_max_paths_2000_count": 4,
+  "sdc_report_timing_recovery_present": true,
+  "sdc_report_timing_removal_present": true
+ },
+ "src_hashes": {
+  "d2.cst": {
+   "sha256": "DA1A0934E35386E0B2A40516DB60E7089848B8F7C8514321606FB088AAD8428D",
+   "bytes": 14303
+  },
+  "d2.sdc": {
+   "sha256": "B98FE342D7346FB33BCD08EE5924BB632B26427324D039BB16944B1BE6F17D2A",
+   "bytes": 4509
+  }
+ },
+ "baseline_compare": {
+  "d2.cst": true,
+  "d2.sdc": true
+ },
+ "baseline_resources": {
+  "Logic": {
+   "used": 46452,
+   "total": 59904,
+   "util": "78%"
+  },
+  "--LUT,ALU,ROM16": {
+   "used": 46422,
+   "total": null,
+   "util": "-",
+   "detail": "30455 LUT, 15967 ALU, 0 ROM16"
+  },
+  "--SSRAM(RAM16)": {
+   "used": 5,
+   "total": null,
+   "util": "-"
+  },
+  "Register": {
+   "used": 14197,
+   "total": 60780,
+   "util": "24%"
+  },
+  "--Logic Register as Latch": {
+   "used": 0,
+   "total": 59904,
+   "util": "0%"
+  },
+  "--Logic Register as FF": {
+   "used": 14186,
+   "total": 59904,
+   "util": "24%"
+  },
+  "--I/O Register as Latch": {
+   "used": 0,
+   "total": 876,
+   "util": "0%"
+  },
+  "--I/O Register as FF": {
+   "used": 11,
+   "total": 876,
+   "util": "2%"
+  },
+  "CLS": {
+   "used": 25658,
+   "total": 29952,
+   "util": "86%"
+  },
+  "I/O Port": {
+   "used": 65,
+   "total": 297,
+   "util": "22%"
+  },
+  "I/O Buf": {
+   "used": 62,
+   "total": null,
+   "util": "-"
+  },
+  "--Input Buf": {
+   "used": 6,
+   "total": null,
+   "util": "-"
+  },
+  "--Output Buf": {
+   "used": 37,
+   "total": null,
+   "util": "-"
+  },
+  "--Inout Buf": {
+   "used": 19,
+   "total": null,
+   "util": "-"
+  },
+  "IOLOGIC": {
+   "used": 61,
+   "total": 293,
+   "util": "21%"
+  },
+  "BSRAM": {
+   "used": 89,
+   "total": 118,
+   "util": "76%"
+  },
+  "DSP": {
+   "used": 61,
+   "total": 118,
+   "util": "52%"
+  }
+ },
+ "gates": {
+  "clk_fmax_ge_50MHz": {
+   "pass": true,
+   "actual_mhz": 50.029,
+   "goal_mhz": 50.0,
+   "baseline_mhz": 52.787
+  },
+  "global_setup_violated_endpoints_zero": {
+   "pass": true,
+   "violated_endpoints": 0
+  },
+  "global_hold_violated_endpoints_zero": {
+   "pass": true,
+   "violated_endpoints": 0
+  },
+  "recovery_all_slacks_ge_0": {
+   "pass": true,
+   "paths": 2000,
+   "min_slack_ns": 0.137,
+   "baseline_min_ns": 0.422,
+   "baseline_paths": 2000
+  },
+  "removal_all_slacks_ge_0": {
+   "pass": true,
+   "paths": 2000,
+   "min_slack_ns": 0.357,
+   "baseline_min_ns": 0.004,
+   "baseline_paths": 2056
+  },
+  "no_unrouted": {
+   "pass": true,
+   "unrouted_nets_reported": 0,
+   "pr0004_marks": 0,
+   "pnr_completed": true,
+   "timing_analysis_completed": true,
+   "bitstream_completed": true
+  },
+  "cls_within_29952": {
+   "pass": true,
+   "used": 25553,
+   "total": 29952,
+   "baseline_used": 25658,
+   "tolerance_over_baseline": null
+  },
+  "constraints_retained": {
+   "pass": true
+  },
+  "build_exit_zero": {
+   "pass": true,
+   "exit_code": 0
+  }
+ }
+}

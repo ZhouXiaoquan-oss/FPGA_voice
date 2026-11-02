@@ -1,0 +1,172 @@
+RTL_FROZEN v10 RELEASE (written 2026-11-01 12:19) -- FINAL HMI object map.
+This supersedes v7 (same feature set, but the screen object ids and the key-lamp
+names are now the ones USER-CONFIRMED on 2026-11-01).
+
+WHAT CHANGED vs v7 (3 files, CST/SDC untouched):
+  src/ui_evt_rx.v       page1 object map re-assigned to the FINAL HMI:
+                          3=滑音(glide) 4=震音(trem) 5=合唱(chorus) 6=32音测试(p32)
+                          7=REV 8=VIB 10=音色(timbre) 11=降八度(oct_dn)
+                          12=高八度(oct_up) 13=效果器开关(fx) 14=延迟档位(dly)
+                          15=跟弹开关(guide) 16=选曲(song)
+                        page0: 4=回声开关(echo) 5=回声换挡(echo_dly)
+                        ev_cho_mix / ev_rv_room / ev_rv_damp outputs are KEPT but
+                        driven 0 (the final HMI has no key for them): chorus mix
+                        (PC 0x12) and reverb room/damp (PC 0x0D/0x0E) stay PC-only.
+  src/top_touch_ddr.v   u_ui_evt wiring for the 9 ev_* pulses; uart_glide/trem/
+                        chorus/echo/echo_dly/rev_room/rev_damp three-source muxes;
+                        test_mode gets `else if (ev_p32)`;
+                        guide_frame_len_f + guide_frame_char_f: the guide lamp
+                        token is "bt<key>" with key = key index 0..11
+                        (kobj = key + 0, i.e. bt0..bt11).
+  src/key_light.v       W21 free-play key lamp; KEY_BASE = 0 -> emits
+                        bt0..bt11 (bt<k>.bco=2016 green / 33808 gray + FF FF FF,
+                        15/16 B for k<=9 and 16/17 B for k=10/11).
+
+  NAMING RULE (user-confirmed 2026-11-01): the HMI keeps the 12 lamp control
+  NAMES bt0..bt11, so the FPGA addresses them by NAME.  The page-0 component
+  IDs (7..18) never appear in a lamp command and the lamps send no touch
+  frames; only the settings-page / echo controls send "65 <page> <obj> 01 FFFFFF"
+  where <obj> is the component ID.
+
+HASHES (UTF-8, no BOM)
+  ui_evt_rx.v      15846 B  9F82377FB2841A24986205B2FF29DF6751954EAFB55C055CC8E66FFE4A7327D6
+  top_touch_ddr.v 229366 B  187023D6BEF2553351B48CE7F7E10B1A5C70B67D30437B4FAEB690230C6B228C
+  key_light.v      11486 B  7C839D6BD362F2A4ED958A8E2D26E8982AC42CDC6CF0EA04AEFBC529AAAA31A5
+  d2.cst           14303 B  DA1A0934E35386E0B2A40516DB60E7089848B8F7C8514321606FB088AAD8428D
+  d2.sdc            4509 B  B98FE342D7346FB33BCD08EE5924BB632B26427324D039BB16944B1BE6F17D2A
+
+BITSTREAM (9/9 GATES PASS, tool STA)
+  impl/pnr/d2_screen_pnr.fs   14,104,161 bytes
+  SHA256 2E2978AE25CD2975F5EFECCAB73A461627EB3633A8045EBB52310CDB12D72962
+  UserCode 0x0000B149 / CheckSum 0xB149   (differs from v7's 0x0000881C, so a
+  post-burn op73 readback distinguishes v10 from v7)
+  clk Fmax 50.029 MHz (constraint 50.0); setup violated 0 (min +0.012 ns);
+  hold violated 0 (min +0.003 ns); recovery min +0.137 ns (2000 paths, 0 viol);
+  removal min +0.357 ns (2000 paths, 0 viol); no unrouted;
+  CLS 25,553/29,952; LUT 30,867; ALU 15,986; FF 14,247; BSRAM 89/118; DSP 61/118.
+  Recipe: place1 / route2 / cro1 / correct_hold1 (project default) / maxfan100 /
+  bit_compress1 / vccx 1.8; CST/SDC unchanged.
+  Build: build_screen_pnr_v10_full.tcl (run syn; run pnr in ONE gw_sh session,
+  same flow as the passing v7 build). PnR elapsed 1604 s.
+  Evidence: evidence/v10_RELEASE_finalmap_20261101_1219/
+
+SIMULATION (final map, ModelSim ASE 10.5b)
+  tb_unit/tb_finalmap_ui_evt.sv    -> FINALMAP_UI_PASS   (23 valid frames,
+      15 action counters each exactly as mapped, page1 obj2/9/17 and page0
+      obj0/7/18 silent, 200 ms same-key swallow, mix/room/damp = 0)
+  tb_unit/tb_finalmap_key_light.sv -> FINALMAP_KL_PASS   (bt0/bt5/bt10/bt11,
+      green 2016 and gray 33808, byte-exact, 15/16/16/17 B)
+  logs: tb_unit/finalmap_ui_evt.log, tb_unit/finalmap_key_light.log
+        (copies in the evidence bundle /tb)
+  NOT re-run in this round: tb_unit/tb_ui_evt_rx_newkeys.sv (v3 obj numbers),
+  tb_int integration TB, reg regression.  See SCREEN_FPGA_RESULT.md section 7.
+
+PAGE0 MAP: echo=obj4 (PC 0x13), echo_len=obj5 (PC 0x14); key lamps addressed by
+NAME bt0..bt11 (component ids 7..18 are irrelevant to the FPGA).
+
+PAGE1 MAP: 3 glide / 4 trem / 5 chorus / 6 p32 / 7 REV / 8 VIB / 10 timbre /
+11 oct_dn / 12 oct_up / 13 fx / 14 dly / 15 guide / 16 song; obj 2/9/17 unused.
+
+FLASH / SRAM: **BURNED OK on 2026-11-01** (v10, script burn_v10.ps1 -Execute):
+  op2 SRAM program  12:23:59 exit 0, 9.05 s, op2 reports UserCode 0x0000B149
+  op73 readback     12:23:59 UserCode 0x0000B149 == expected  OK
+  op69 exFlash      12:23:59-12:30:20 exit 0, 380.88 s,
+                    'Program and Verify flash successfully.'
+  post-program op73 reads 0x00000000 (GAO bridge in SRAM) -- normal.
+  records: V10_BURN_RESULT.txt / v10_burn.log
+Self-boot check: PENDING.  SW2=100001 + real DC power cycle 5 s, power on, then
+`burn_v10.ps1 -VerifyOnly` must report op73 = 0x0000B149.
+(For v7 this self-boot check was never recorded as PASS either.)
+
+HISTORY (archived, NOT used): v7 (2026-11-01 10:36) delivered the same feature
+set with page0 obj16/17 + page1 obj12..15 numbering; it was burned successfully
+(V7_BURN_RESULT.txt / v7_burn.log, UserCode 0x0000881C, fs 14,412,289 B,
+SHA256 6A1D5EF8C2FA393035CC07E21D52BD11A05998F800FE6AC0E353A8C5CDE3EE05).
+v9/v10a intermediate map (page1 2..8/11..15/18/19, lamps bt7..bt18) FAILED the
+timing gates (v10a: clk 41.544 MHz, setup 652 violated endpoints) and is kept
+only as evidence in evidence/v10a_bt7_18_GATESFAIL_20261101_1145/.
+The v7/v3 release notes below are kept verbatim for traceability.
+
+=======================================================================
+BURN RECORD (2026-11-01): op2 SRAM OK 10:30:02 (op73 readback 0x0000881C),
+op69 exFlash OK 10:36:33 -- 'Program and Verify flash successfully.' 388.63 s.
+Self-boot check PENDING: SW2=100001 + real DC power cycle 5 s -> op73 == 0x0000881C.
+
+RTL_FROZEN v7 RELEASE (written 2026-11-01 10:25) -- v3 + W21b screen-key visual feedback.
+
+WHAT CHANGED vs v3: merged the already-implemented Task-021/W21b feature
+"MPR121 physical key -> screen virtual key light" instead of writing it anew:
+  src/key_light.v          (copied from F:/fiehuo/w21b_scrkey_20261029/rtl/key_light.v)
+  src/top_touch_ddr.v      5 integration points:
+      1) kl_data/kl_send/kl_busy net declarations next to scr_txd2_*
+      2) guide owner NONE->SCR now requires !kl_busy
+      3) sta_tx_free = (owner != SCR) && !kl_busy
+      4) scr_txd2_data/send three-source mux: guide > key-light > status burst
+      5) u_key_light instance + kl_mode/kl_env gates near the amplifier enable
+  d2_screen_pnr.gprj       added src/key_light.v to the file list
+Behaviour: free play (guide OFF) -> press electrode k sends "bt<k>.bco=2016"+FFF
+(green, 15/16 B), release sends "bt<k>.bco=33808"+FFF (gray, 16/17 B).
+Guide mode owns the panel: key-light is disabled there (kl_mode=0) and its
+pending mask is cleared, so the follow-along lights are unchanged.
+
+HASHES
+  ui_evt_rx.v      {h1}
+  top_touch_ddr.v  {h2}
+  key_light.v      {h3}
+
+BITSTREAM (ALL GATES PASS, tool STA)
+  impl/pnr/d2_screen_pnr.fs   {fsb} bytes
+  SHA256 {fsh}   UserCode 0x0000881C / CheckSum 0x881C
+  clk Fmax 50.025 MHz (constraint 50.0), setup violated 0 (min +0.010 ns),
+  hold violated 0 (min 0.000 ns), recovery min +0.441 ns, removal min +0.727 ns,
+  no unrouted, CLS 25,597/29,952, LUT 30,832, FF 14,247, BSRAM 89/118, DSP 61/118.
+  Recipe: place1 / route2 / cro1 / correct_hold1 / maxfan100 / vccx 1.8; CST/SDC unchanged.
+  Evidence: evidence/v7_keylight_ALLPASS_20261101_102456/
+
+PAGE0 OBJECT MAP (unchanged, screen side): ECHO -> obj16 (65 00 10 ...),
+ECHO LEN -> obj17 (65 00 11 ...).  Page1 obj 2..15 unchanged; TEST=obj12.
+
+FLASH/SRAM state: SRAM + external Flash are programmed by the v7 burn watcher
+(v7_burn.log / V7_BURN_RESULT.txt); self-boot check = SW2 100001 + real DC
+power cycle 5 s, then op73 must read 0x0000881C.
+
+FLASH PROGRAMMING (2026-10-31 15:59-16:06, op69 thru GAO-Bridge, SW2=001011):
+  SUCCESS -- 'Program and Verify flash successfully.' 381.51 s, exit 0.
+  Post-program op73 reads 0x00000000 (GAO bridge in SRAM) -- normal.
+  Self-boot check: SW2=100001, real DC power cycle 5 s, power on, then op73 should read 0x0000DBEB.
+
+RTL_FROZEN v3 RELEASE (written 2026-10-31 15:25 +08:00) -- FINAL deliverable for the 16/17 screen mapping.
+
+DECISION: the screen side is adjusted to send page0 obj 16 = ECHO and obj 17 = ECHO LEN
+(frames 65 00 10 01 FF FF FF and 65 00 11 01 FF FF FF).  With that mapping the already
+fully-verified v3 RTL/bitstream is used as-is -- no FPGA-side change is needed.
+
+ui_evt_rx.v      SHA256 8B89D8B51EBFF8FA529B5910853330B3F04D2098E5D7DADA20E00A32D2D39E5C
+top_touch_ddr.v  SHA256 F22821AE7FDE64BB0DCE79893CDF109DAA7CF4BF86D82D7F9E86F22FEB7A80AC
+d2.cst           SHA256 DA1A0934E35386E0B2A40516DB60E7089848B8F7C8514321606FB088AAD8428D
+d2.sdc           SHA256 B98FE342D7346FB33BCD08EE5924BB632B26427324D039BB16944B1BE6F17D2A
+
+BITSTREAM (all gates PASS, tool STA):
+  impl/pnr/d2_screen_pnr.fs   14070353 bytes
+  SHA256 C6F81559F91E6A0B92CDD0B4A7DB69DE400448AF29F8ED2898094B5CAF774E8D   UserCode 0x0000DBEB
+  clk Fmax 51.521 MHz, setup/hold violated 0, recovery min +0.423 ns, removal min +1.027 ns,
+  no unrouted, CLS 25,408/29,952, mandated recipe place1/route2/cro1, CST/SDC unchanged.
+
+PAGE0 OBJECT MAP FOR THE SCREEN (page 0, sendkey=2, monochrome buttons):
+  ECHO      -> obj 16 -> 65 00 10 01 FF FF FF   (PC 0x13 equivalent)
+  ECHO LEN  -> obj 17 -> 65 00 11 01 FF FF FF   (PC 0x14 equivalent)
+  page 0 all other controls stay sendkey=0.
+
+HISTORY (archived, NOT used): a variant decoding page0 obj 15/16 directly in the FPGA was
+attempted on 2026-10-31 13:00-15:24.  Eight PnR configurations were tried (place0/1/2, cro0/1/2,
+maxfan50, global_freq50, two netlist families).  None met all timing gates: the small-netlist
+family reached clk 50.006 MHz / setup 0 / hold 0 but recovery -0.889 ns (structural, identical
+across placement seeds); the large-netlist family recovered (+0.422 ns) but peaked at
+clk 49.211 MHz.  Root cause: the 15/16 constant set changes GowinSyn mapping (T_Lut 28,963 ->
+30,841), which perturbs the 85%-full placement/clock planning on this marginal design.
+Those experiment trees (work/d2_pnr_a..k), failed bitstreams and reports are kept for
+reference only; the files listed above are the release.
+
+Unit/integration/regression evidence for this RTL: tb_unit/unit_tb.log UNIT_TB_PASS;
+tb_int/SIM_INT_REPORT.md 69/69 assertions; reg/SIM_REG_REPORT.md (v3 FINAL, traces byte-identical
+to the frozen references).
