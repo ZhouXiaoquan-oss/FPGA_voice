@@ -10,7 +10,7 @@
 
 | 项 | 值（实测） |
 |---|---|
-| 位流文件 | `bitstream/d2_screen_pnr.fs` |
+| 位流文件 | GitHub Release **[v10](https://github.com/ZhouXiaoquan-oss/FPGA_voice/releases/tag/v10)** 资产 `d2_screen_pnr.fs`（仓库内不存二进制，仅保留 SHA256 身份文件） |
 | 大小 / SHA256 | **14,104,161 B** / `2E2978AE25CD2975F5EFECCAB73A461627EB3633A8045EBB52310CDB12D72962` |
 | UserCode / CheckSum | **`0x0000B149`** / `0xB149` |
 | PnR 门禁 | **9/9 PASS**：clk **Fmax 50.029 MHz**（约束 50.0）；setup violated **0**（min +0.012 ns）；hold violated **0**（min +0.003 ns）；recovery min +0.137 ns；removal min +0.357 ns；**无 unrouted**；CLS 25,553/29,952 |
@@ -71,7 +71,7 @@ tang60k-guitar-synth/
 ├─ sim/unit/                 v10 最终映射单元 TB + 通过日志
 ├─ build/                    原始 v10 构建脚本（syn / pnr / full / cmd.do / device.cfg）
 ├─ tools/                    burn_v10.ps1（烧录）、parse_pnr_gates.py（门禁解析）、validate_project.tcl
-├─ bitstream/                交付位流 + SHA256 身份文件
+├─ bitstream/SHA256.txt      交付位流的身份文件（位流本体见 Release v10）
 └─ docs/                     版本锚点 RTL_FROZEN.txt、交付报告 SCREEN_FPGA_RESULT.md
    └─ evidence/              门禁汇总、PnR 报告、烧录记录、建流分析
 ```
@@ -151,4 +151,4 @@ d2.sdc             4509 B  B98FE342D7346FB33BCD08EE5924BB632B26427324D039BB16944
 
 - 本仓库仅含 **v10 成品**；`impl/`、构建日志、实验树、历史版本（v3/v7/v9/v10a 等）均未收录。
 - `.gitattributes` 关闭了行尾转换，保证源码与 `RTL_FROZEN.txt` 的 SHA256 可核对。
-- 许可证：**未添加**（如需开源请按项目组要求补充 LICENSE）。
+- 许可证：**MIT**（见 `LICENSE`，最大开放程度：可自由使用 / 修改 / 分发 / 商用，只需保留版权与许可声明）。
